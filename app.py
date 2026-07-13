@@ -115,11 +115,11 @@ if not df.empty:
 
                     view = py3Dmol.view(width=800, height=600)
                     view.addModel(pdb_string, "pdb")
-                    # 1. Style the main protein receptor
+                    # 1. Clean up and set the main protein purely to a cartoon ribbon
                     view.setStyle({'cartoon': {'color': 'spectrum'}})
 
-                    # 2. Explicitly target ONLY the ligand (UNL) and make it bright magenta
-                    view.addStyle({'resn': 'UNL'}, {'stick': {'colorscheme': 'magentaCarbon', 'radius': 0.25}})
+                    # 2. Target the ligand and render it as solid spheres
+                    view.addStyle({'resn': ['UNL', 'LIG', 'MOL', 'UNK']}, {'sphere': {'colorscheme': 'magentaCarbon', 'radius': 1.2}})
 
                     view.setBackgroundColor('white')
 
