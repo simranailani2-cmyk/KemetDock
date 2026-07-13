@@ -24,7 +24,6 @@ Fenugreek,Trigonella foenum-graecum,Fabaceae,Diosgenin,CC1CCC2(C(C3C(O)CC4C3(CCC
 Onion,Allium cepa,Amaryllidaceae,Quercetin,O=C1C(=C(O)C=C(O)C1=O)C2=CC(=C(O)C=C2)O,𓂋𓋴𓈎𓃀𓃀𓏁𓄣𓏤𓂧𓂋𓀜𓉔𓅱𓄿𓅱𓐎,r sqbb jb dr hwꜣw,Ebers Papyrus (Recipe 143),To cool the heart and prevent decay.,Antioxidant,Phosphoinositide 3-kinase (PI3K),1E7V
 Mandrake,Mandragora officinarum,Solanaceae,Scopolamine,CN1C2CCC1CC(C2)OC(=O)C(CO)C3=CC=CC=C3,𓂋𓋴𓆓𓂋𓁀𓅓𓈎𓂧𓁀,r sḏr m qed,Ebers Papyrus (Recipe 281),To induce deep sleep and numb the flesh.,Anesthetic,Muscarinic M1 Receptor,5CXV
 Cannabis,Cannabis sativa,Cannabaceae,Cannabidiol,CCCCCC1=CC(=C(C(=C1)O)C2C=C(C)CCC2C(=C)C)O,𓊪𓄡𓂋𓏏𓏺𓈖𓏏𓋴𓈎𓃀𓃀𓏁𓂤𓏥𓈖𓁹𓁹,pẖrt nt sqbb mt n jrty,Ebers Papyrus (Recipe 821),To cool the vessels of the eye and reduce pain.,Anti-inflammatory,Cannabinoid Receptor 1 (CB1),5XRA
-Common Name,Botanical Name,Family,Active Phytochemical,SMILES,Ancient Symbols,Claim Transliteration,Papyrus Source,Ancient Claim,Modern Use,Protein Target,PDB ID
 Black Seed,Nigella sativa,Ranunculaceae,Thymoquinone,CC1=CC(=O)C(=C(C1=O)C)C(C)C,𓊪𓄡𓂋𓏏𓏺𓈖𓏏𓂧𓂋𓀜𓋴𓂋𓇋𓇋𓏏𓊡,pẖrt nt dr sryt,Ebers Papyrus,For respiratory distress and stomach pain.,Anti-inflammatory,Cyclooxygenase-2 (COX-2),5IKQ
 Cinnamon,Cinnamomum zeylanicum,Lauraceae,Cinnamaldehyde,O=CC=Cc1ccccc1,𓂋𓋴𓈖𓆓𓅓𓇛𓏤𓂋𓏺,r snḏm rʾ,Ebers Papyrus,To freshen breath and soothe the chest.,Antimicrobial,Bacterial DNA Gyrase,1KZN
 Peppermint,Mentha piperita,Lamiaceae,Menthol,CC1CCC(C(C1)O)C(C)C,𓂋𓋴𓄤𓆑𓂋𓄡𓏏𓏺,r snfr ẖt,Ebers Papyrus,To soothe the stomach and sweeten the breath.,Digestive and analgesic,TRPM8 (Cold Receptor),6O9C
