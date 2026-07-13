@@ -115,9 +115,15 @@ if not df.empty:
 
                     view = py3Dmol.view(width=800, height=600)
                     view.addModel(pdb_string, "pdb")
+                    # 1. Style the main protein receptor
                     view.setStyle({'cartoon': {'color': 'spectrum'}})
-                    view.addStyle({'resn': 'UNL'}, {'stick': {}})
+
+                    # 2. Style the ligand (using hetflag to catch the small molecule) to stand out in bright green
+                    view.addStyle({'hetflag': True}, {'stick': {'colorscheme': 'greenCarbon', 'radius': 0.2}})
+
                     view.setBackgroundColor('white')
+
+                    # 3. Zoom to fit the whole complex
                     view.zoomTo()
                     showmol(view, height=600, width=800)
                 except FileNotFoundError:
