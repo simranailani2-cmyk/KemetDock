@@ -113,13 +113,13 @@ if not df.empty:
                     with open(file_path, "r") as f:
                         pdb_string = f.read()
 
-                    view = py3Dmol.view(width=400, height=400)
+                    view = py3Dmol.view(width=800, height=600)
                     view.addModel(pdb_string, "pdb")
                     view.setStyle({'cartoon': {'color': 'spectrum'}})
-                    view.addStyle({'hetflag': True}, {'stick': {}})
+                    view.addStyle({'resn': 'UNL'}, {'stick': {}})
                     view.setBackgroundColor('white')
                     view.zoomTo()
-                    showmol(view, height=400, width=400)
+                    showmol(view, height=600, width=800)
                 except FileNotFoundError:
                     st.error(f"3D structure file not found: {file_path}")
                 except Exception as e:
