@@ -107,16 +107,16 @@ if not df.empty:
                 st.subheader("Interactive 3D Docking Simulation")
 
                 # Format common name to lower case and spaces to underscores
-                file_name = selected_plant.lower().replace(" ", "_")
-                file_path = f"data/{file_name}.pdb"
+                file_path = "data/" + selected_plant.lower().replace(" ", "_") + ".pdb"
 
                 try:
                     with open(file_path, "r") as f:
-                        pdb_data = f.read()
+                        pdb_string = f.read()
 
                     view = py3Dmol.view(width=400, height=400)
-                    view.addModel(pdb_data, "pdb")
-                    view.setStyle({'stick': {}})
+                    view.addModel(pdb_string, "pdb")
+                    view.setStyle({'cartoon': {'color': 'spectrum'}})
+                    view.addStyle({'hetflag': True}, {'stick': {}})
                     view.setBackgroundColor('white')
                     view.zoomTo()
                     showmol(view, height=400, width=400)
