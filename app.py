@@ -118,12 +118,15 @@ if not df.empty:
                     # 1. Style the main protein receptor
                     view.setStyle({'cartoon': {'color': 'spectrum'}})
 
-                    # 2. Style the ligand (using hetflag to catch the small molecule) to stand out in bright green
-                    view.addStyle({'hetflag': True}, {'stick': {'colorscheme': 'greenCarbon', 'radius': 0.2}})
+                    # 2. Target the ligand by common docking residue names (UNL, LIG, MOL)
+                    view.addStyle({'resn': ['UNL', 'LIG', 'MOL']}, {'stick': {'colorscheme': 'greenCarbon', 'radius': 0.25}})
+
+                    # 3. Blanket fallback: Target anything that is NOT part of a standard protein chain
+                    view.addStyle({'not': {'protein': True}}, {'stick': {'colorscheme': 'greenCarbon', 'radius': 0.25}})
 
                     view.setBackgroundColor('white')
 
-                    # 3. Zoom to fit the whole complex
+                    # 4. Zoom to fit the whole complex
                     view.zoomTo()
                     showmol(view, height=600, width=800)
                 except FileNotFoundError:
