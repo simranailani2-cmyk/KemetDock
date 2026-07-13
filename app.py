@@ -118,11 +118,8 @@ if not df.empty:
                     # 1. Style the main protein receptor
                     view.setStyle({'cartoon': {'color': 'spectrum'}})
 
-                    # 2. Target the ligand by common docking residue names (UNL, LIG, MOL)
-                    view.addStyle({'resn': ['UNL', 'LIG', 'MOL']}, {'stick': {'colorscheme': 'greenCarbon', 'radius': 0.25}})
-
-                    # 3. Blanket fallback: Target anything that is NOT part of a standard protein chain
-                    view.addStyle({'not': {'protein': True}}, {'stick': {'colorscheme': 'greenCarbon', 'radius': 0.25}})
+                    # 2. Explicitly target ONLY the ligand (UNL) and make it bright magenta
+                    view.addStyle({'resn': 'UNL'}, {'stick': {'colorscheme': 'magentaCarbon', 'radius': 0.25}})
 
                     view.setBackgroundColor('white')
 
