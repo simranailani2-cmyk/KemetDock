@@ -1,7 +1,11 @@
+import os
 import streamlit as st
 import pandas as pd
+import py3Dmol
+from stmol import showmol
 from rdkit import Chem
 from rdkit.Chem import Draw
+from rdkit.Chem import rdMolDescriptors
 
 st.set_page_config(page_title="Kemet Dock", layout="wide")
 
@@ -86,11 +90,54 @@ if not df.empty:
                     if mol:
                         img = Draw.MolToImage(mol, size=(400, 400))
                         st.image(img, use_container_width=True)
+
+                        st.subheader("Molecular Properties")
+                        st.write(f"**Total Atoms:** {mol.GetNumAtoms()}")
+                        st.write(f"**Rotatable Bonds:** {rdMolDescriptors.CalcNumRotatableBonds(mol)}")
+                        st.write(f"**Hydrogen Bond Donors:** {rdMolDescriptors.CalcNumHBD(mol)}")
+                        st.write(f"**Hydrogen Bond Acceptors:** {rdMolDescriptors.CalcNumHBA(mol)}")
                     else:
                         st.write("Could not parse SMILES string into a 2D structure.")
                 except Exception as e:
                     st.write(f"Error parsing SMILES string: {e}")
             else:
                 st.write("No SMILES string available for this plant.")
+
+            st.subheader("3D Docking Structure")
+            plant_name_formatted = selected_plant.lower().replace(" ", "_")
+            pdb_path = f"data/{plant_name_formatted}_docked.pdb"
+            pdbqt_path = f"data/{plant_name_formatted}_docked.pdbqt"
+
+            if os.path.exists(pdb_path):
+                file_to_load = pdb_path
+                file_format = "pdb"
+            elif os.path.exists(pdbqt_path):
+                file_to_load = pdbqt_path
+                file_format = "pdbqt"
+            else:
+                file_to_load = None
+
+            if file_to_load:
+                with open(file_to_load, "r") as f:
+                    mol_data = f.read()
+                view = py3Dmol.view(width=400, height=400)
+                view.addModel(mol_data, file_format)
+                view.setStyle({'stick': {}})
+                view.zoomTo()
+                showmol(view, height=400, width=400)
+            else:
+                st.info("3D Docking structure file pending upload to repository data folder.")
+
+            st.subheader("Binding Energies")
+            # Create mock data for poses 1-9
+            binding_data = {
+                "Pose": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                "Binding Affinity (kcal/mol)": [-8.4, -8.1, -7.9, -7.8, -7.5, -7.3, -7.1, -6.9, -6.7]
+            }
+            binding_df = pd.DataFrame(binding_data)
+            # Ensure it is sorted with the lowest (most negative) binding energy at the top
+            binding_df = binding_df.sort_values("Binding Affinity (kcal/mol)")
+            st.dataframe(binding_df, use_container_width=True, hide_index=True)
+
 else:
     st.warning("No data available in kemet_plants.csv.")
