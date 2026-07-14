@@ -113,17 +113,33 @@ if not df.empty:
                     with open(file_path, "r") as f:
                         pdb_string = f.read()
 
-                    view = py3Dmol.view(width=800, height=600)
-                    view.addModel(pdb_string, "pdb")
-                    # 1. Clean up and set the main protein purely to a cartoon ribbon
-                    view.setStyle({'cartoon': {'color': 'spectrum'}})
+                    # 1. Split the raw PDB text into protein and ligand blocks
+                    protein_lines = []
+                    ligand_lines = []
+                    for line in pdb_string.split('\n'):
+                        # HETATM and CONECT belong to the ligand
+                        if line.startswith('HETATM') or line.startswith('CONECT'):
+                            ligand_lines.append(line)
+                        else:
+                            protein_lines.append(line)
 
-                    # 2. Target the ligand and render it as solid spheres
-                    view.addStyle({'resn': ['UNL', 'LIG', 'MOL', 'UNK']}, {'sphere': {'colorscheme': 'magentaCarbon', 'radius': 1.2}})
+                    protein_pdb = '\n'.join(protein_lines)
+                    ligand_pdb = '\n'.join(ligand_lines)
+
+                    # 2. Initialize viewer and add them as completely separate models
+                    view = py3Dmol.view(width=800, height=600)
+
+                    # Model 0: The Protein
+                    view.addModel(protein_pdb, 'pdb')
+                    view.setStyle({'model': 0}, {'cartoon': {'color': 'spectrum'}})
+
+                    # Model 1: The Ligand
+                    view.addModel(ligand_pdb, 'pdb')
+                    view.setStyle({'model': 1}, {'stick': {'colorscheme': 'magentaCarbon', 'radius': 0.25}})
 
                     view.setBackgroundColor('white')
 
-                    # 4. Zoom to fit the whole complex
+                    # 3. Render
                     view.zoomTo()
                     showmol(view, height=600, width=800)
                 except FileNotFoundError:
