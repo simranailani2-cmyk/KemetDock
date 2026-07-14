@@ -98,13 +98,20 @@ if not df.empty:
             st.selectbox("Select Protein Target Receptor:", [plant_data['Protein Target']])
             st.selectbox("Select Phytochemical Ligand:", [plant_data['Active Phytochemical']])
 
-            initiate_docking = st.button("🚀 Initiate Molecular Docking")
-
-            if initiate_docking:
+            if st.button("🚀 Initiate Molecular Docking"):
+                st.session_state.docking_initiated = True
                 with st.spinner('Calculating thermodynamic trajectories and sampling binding poses...'):
                     time.sleep(2)
 
+            if st.session_state.get('docking_initiated', False):
                 st.subheader("Interactive 3D Docking Simulation")
+
+                with st.expander("⚙️ 3D Viewer Settings"):
+                    st_col1, st_col2 = st.columns(2)
+                    with st_col1:
+                        receptor_style = st.selectbox('Receptor Style', ['Cartoon', 'Surface', 'Line'])
+                    with st_col2:
+                        ligand_style = st.selectbox('Ligand Style', ['Stick', 'Sphere'])
 
                 # Format common name to lower case and spaces to underscores
                 file_path = "data/" + selected_plant.lower().replace(" ", "_") + ".pdb"
@@ -131,11 +138,20 @@ if not df.empty:
 
                     # Model 0: The Protein
                     view.addModel(protein_pdb, 'pdb')
-                    view.setStyle({'model': 0}, {'cartoon': {'color': 'spectrum'}})
+                    if receptor_style == 'Cartoon':
+                        view.setStyle({'model': 0}, {'cartoon': {'color': 'pink'}})
+                    elif receptor_style == 'Line':
+                        view.setStyle({'model': 0}, {'line': {'color': 'pink'}})
+                    elif receptor_style == 'Surface':
+                        view.setStyle({'model': 0}, {})
+                        view.addSurface(py3Dmol.VDW, {'opacity': 0.8, 'color': 'pink'}, {'model': 0})
 
                     # Model 1: The Ligand
                     view.addModel(ligand_pdb, 'pdb')
-                    view.setStyle({'model': 1}, {'stick': {'colorscheme': 'magentaCarbon', 'radius': 0.25}})
+                    if ligand_style == 'Stick':
+                        view.setStyle({'model': 1}, {'stick': {'colorscheme': 'grayCarbon', 'radius': 0.25}})
+                    elif ligand_style == 'Sphere':
+                        view.setStyle({'model': 1}, {'sphere': {'colorscheme': 'grayCarbon', 'radius': 1.2}})
 
                     view.setBackgroundColor('white')
 
